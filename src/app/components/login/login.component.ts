@@ -18,18 +18,24 @@ export class LoginComponent {
   authService = inject(AuthService);
   router = inject(Router);
 
-  
-  
-  login(event: Event) {
-    event.preventDefault();
-    console.log(`Login: ${this.email} / ${this.password}`);
-    this.authService
+  loginForm = new FormGroup({
+    email: new FormControl(this.email, [Validators.required, Validators.minLength(2)]),
+    password: new FormControl(this.password, [Validators.required, Validators.minLength(4)])
+  });
+  login() {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      console.log(`Login: ${email} / ${password}`);
+      this.authService
     .login({
-      email: this.email,
-      password: this.password
+      email: email as string,
+      password: password as string
     })
     .subscribe(() => {
       this.router.navigate(['/']);
-    })
+    });
+    } else {
+      console.log('Form is not valid');
+    }
   }
 }
