@@ -1,15 +1,17 @@
-<h1>Login</h1>
-<div style="background-color: hsla(0, 0%, 0%, 0.3);">
-    <form (submit)="login($event)">
-        <div>
-            <input type="text" name="email" placeholder="Email" [(ngModel)]="email"/>
-        </div>
-        <div>
-            <input type="password" name="password" placeholder="Password" [(ngModel)]="password"/>
-        </div>
-        <button class="btn-primary">Login</button>
-    </form>
-</div>
-
-
-
+<div class="bg-image vh-100" style="
+              margin-top: -58.59px;
+              background-image: url('https://torange.biz/photofxnew/196/HD/best-background-template-discount-offer-sale-196639.jpg');">
+    
+    <h1>Login</h1>
+    <div class="container login-xxl bg-dark rounded-4 p-4">
+        <h3 style="color: aliceblue;">Login</h3>
+        <hr style="color: grey;">
+        <form (submit)="login($event)" >
+            <input class="form-control mb-3" type="text" name="email" placeholder="Email" [(ngModel)]="email"/>
+            
+            <input class="form-control mb-4" type="password" name="password" placeholder="Password" [(ngModel)]="password"/>
+            <hr style="color: gray;">
+            <button class="btn btn-primary">Sign in</button>
+        </form>
+    </div>
+</div>   

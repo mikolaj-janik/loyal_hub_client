@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -18,6 +18,8 @@ export class LoginComponent {
   authService = inject(AuthService);
   router = inject(Router);
 
+  
+  
   login(event: Event) {
     event.preventDefault();
     console.log(`Login: ${this.email} / ${this.password}`);
@@ -27,7 +29,6 @@ export class LoginComponent {
       password: this.password
     })
     .subscribe(() => {
-      alert('Login success!');
       this.router.navigate(['/']);
     })
   }
