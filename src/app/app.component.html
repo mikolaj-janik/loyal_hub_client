@@ -1,8 +1,43 @@
-<div style="
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;">
-  <router-outlet></router-outlet>
-</div>
 
+  
+    <header>
+    <nav  style="z-index: 1;
+                min-height: 58.59px;"
+          class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <button
+            data-mdb-collapse-init
+            class="navbar-toggler"
+            type="button"
+            data-mdb-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+        
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a class="navbar-brand mt-2 mt-lg-0" href="#">
+                <i class="fas fa-book-open">LoyaltyHub</i>
+            </a>
+          </div>
+        </div>
+      </nav>
+    
+      <div class="bg-image vh-100 justify-content-center" style="
+                  margin-top: -58.59px;
+                  background-image: url('https://torange.biz/photofxnew/196/HD/best-background-template-discount-offer-sale-196639.jpg');">
+        
+        <router-outlet></router-outlet>
+      </div>
+    </header>
+    
+    <main>
+      <div class="mask" style="background-color: hsla(0, 0%, 0%, 0.3)">
+        
+      </div>
+    </main>
+  
+    
