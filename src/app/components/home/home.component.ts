@@ -9,7 +9,7 @@ import { AuthService } from '../../service/auth.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  authService = inject(AuthService)
+  authService = inject(AuthService);
 
   user?: any;
 

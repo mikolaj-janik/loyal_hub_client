@@ -9,18 +9,21 @@
         <form [formGroup]="loginForm" (ngSubmit)="login()">
             <input class="form-control mb-3" type="text" name="email" placeholder="Email" formControlName="email"/>
             
-            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="alert alert-danger mt-1">
+            <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)" class="alert alert-danger mt-1">
                 <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
                 <span *ngIf="loginForm.get('email')?.errors?.['minlength']">Email must be at least 2 characters long.</span>
             </div>
 
             <input class="form-control mb-4" type="password" name="password" placeholder="Password" formControlName="password"/>
 
-            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="alert alert-danger mt-1">
+            <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="alert alert-danger mt-1">
                 <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
                 <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 4 characters long.</span>
             </div>
-
+            <div *ngIf="authService.isError()" class="alert alert-danger mt-1">
+                <span>Incorrect email or password</span>
+            </div>
+            
             <hr style="color: gray;">
             <button class="btn btn-primary" type="submit">Sign in</button>
         </form>

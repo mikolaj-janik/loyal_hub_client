@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,9 @@ export class AuthService {
 
   private readonly JWT_TOKEN = 'JWT_TOKEN'
   private loggedUser?: string;
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false)
+  private hasErrors = false;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+  public isLoggedIn$ = this.isAuthenticatedSubject.asObservable();
   private routerService = inject(Router);
 
   private http = inject(HttpClient);
@@ -21,18 +23,33 @@ export class AuthService {
     return this.http
     .post('https://api.escuelajs.co/api/v1/auth/login', user)
     .pipe(
-      tap((tokens: any)=>this.doLoginUser(user.email, tokens.access_token))
+      tap((tokens: any)=>this.doLoginUser(user.email, tokens.access_token)),
+      catchError((error) => {
+        if (error.status === 401) {
+          this.hasErrors = true;
+          return throwError('Invalid email or password');
+        } else {
+          
+          return throwError('An error occurred during login');
+        }
+      })
+      
     )
   }
 
   private doLoginUser(email: string, token: any) {
     this.loggedUser = email;
     this.isAuthenticatedSubject.next(true);
+    this.hasErrors = false;
     this.storeJwtToken(token);
   }
 
   private storeJwtToken(jwt: string) {
     localStorage.setItem(this.JWT_TOKEN, jwt);
+  }
+
+  isError() : boolean {
+    return this.hasErrors;
   }
 
   logout() {

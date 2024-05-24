@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   email = '';
   password = '';
+  error = '';
 
   authService = inject(AuthService);
   router = inject(Router);
@@ -32,6 +33,7 @@ export class LoginComponent {
       password: password as string
     })
     .subscribe(() => {
+      if (this.authService)
       this.router.navigate(['/']);
     });
     } else {
