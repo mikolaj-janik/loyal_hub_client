@@ -2,30 +2,43 @@
               margin-top: -58.59px;
               background-image: url('https://torange.biz/photofxnew/196/HD/best-background-template-discount-offer-sale-196639.jpg');">
     
-    <h1>Login</h1>
+    <h1>Register</h1>
     <div class="container login-xxl bg-dark rounded-4 p-4">
-        <h3 style="color: aliceblue;">Login</h3>
+        <h3 style="color: aliceblue;">Register</h3>
         <hr style="color: grey;">
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
             <input class="form-control mb-3" type="text" name="email" placeholder="Email" formControlName="email"/>
             
-            <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)" class="alert alert-danger mt-1">
+            <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)" class="alert alert-danger mt-1">
                 <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
                 <span *ngIf="loginForm.get('email')?.errors?.['minlength']">Email must be at least 2 characters long.</span>
             </div>
 
             <input class="form-control mb-4" type="password" name="password" placeholder="Password" formControlName="password"/>
 
-            <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="alert alert-danger mt-1">
+            <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty)" class="alert alert-danger mt-1">
                 <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
                 <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</span>
             </div>
+
+            <input class="form-control mb-4" type="password" name="repeatedPassword" placeholder="Repeat your password" formControlName="repeatedPassword"/>
+
+            <div *ngIf="registerForm.get('repeatedPassword')?.invalid && (registerForm.get('repeatedPassword')?.dirty)" class="alert alert-danger mt-1">
+                <span *ngIf="loginForm.get('repeatedPassword')?.errors?.['required']">Password is required.</span>
+                <span *ngIf="loginForm.get('repeatedPassword')?.errors?.['minlength']">Password must be at least 8 characters long.</span>
+            </div>
+
+            <div *ngIf="registerForm.errors?.['passwordMismatch']" class="alert alert-danger mt-1">
+                Passwords do not match!
+            </div>
+
             <div *ngIf="authService.isError()" class="alert alert-danger mt-1">
                 <span>Incorrect email or password</span>
             </div>
             
             <hr style="color: gray;">
-            <button class="btn btn-primary" type="submit">Sign in</button>
+            <button class="btn btn-primary" type="submit">Sign up</button>
         </form>
     </div>
 </div>   
+

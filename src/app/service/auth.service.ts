@@ -21,7 +21,25 @@ export class AuthService {
 
   login(user: { email: string, password: string }): Observable<any>{
     return this.http
-    .post('https://api.escuelajs.co/api/v1/auth/login', user)
+    .post('http://localhost:8081/api/login_check', user)
+    .pipe(
+      tap((tokens: any)=>this.doLoginUser(user.email, tokens.access_token)),
+      catchError((error) => {
+        if (error.status === 401) {
+          this.hasErrors = true;
+          return    throwError('Invalid email or password');
+        } else {
+          
+          return throwError('An error occurred during login');
+        }
+      })
+      
+    )
+  }
+
+  register(user: { email: string, password: string, repeatedPassword: string }): Observable<any>{
+    return this.http
+    .post('http://localhost:8081/api/register', user)
     .pipe(
       tap((tokens: any)=>this.doLoginUser(user.email, tokens.access_token)),
       catchError((error) => {
