@@ -1,6 +1,6 @@
 <div class="bg-image vh-100" style="
               margin-top: -58.59px;
-              background-image: url('https://torange.biz/photofxnew/196/HD/best-background-template-discount-offer-sale-196639.jpg');">
+              background-image: url('https://www.chetu.com/img/blogs/features-of-a-loyalty-management-system/features-of-a-loyalty-management-system-banner.jpg');">
     
     <h1>Login</h1>
     <div class="container login-xxl bg-dark rounded-4 p-4">
@@ -20,6 +20,7 @@
                 <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
                 <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</span>
             </div>
+
             <div *ngIf="authService.isError()" class="alert alert-danger mt-1">
                 <span>Incorrect email or password</span>
             </div>

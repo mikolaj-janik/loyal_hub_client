@@ -37,9 +37,14 @@ export class AuthService {
     )
   }
 
-  register(user: { email: string, password: string, repeatedPassword: string }): Observable<any>{
+  register(user: { email: string, password: string, repeatedPassword: string}): Observable<any>{
+
+    const user1 = {
+      password: user.password,
+      repeatedPassword: user.repeatedPassword
+    };
     return this.http
-    .post('http://localhost:8081/api/register', user)
+    .post(`http://localhost:8081/api/clients/${user.email}/completeRegistration`, user1)
     .pipe(
       tap((tokens: any)=>this.doLoginUser(user.email, tokens.access_token)),
       catchError((error) => {
@@ -51,8 +56,11 @@ export class AuthService {
           return throwError('An error occurred during login');
         }
       })
-      
     )
+  }
+  acceptInvitation(activationUrl: string): Observable<any> {
+    const url = `http://localhost:8081/api/invitations/${activationUrl}/accept`;
+    return this.http.post(url, {}); 
   }
 
   private doLoginUser(email: string, token: any) {
@@ -64,6 +72,12 @@ export class AuthService {
 
   private storeJwtToken(jwt: string) {
     localStorage.setItem(this.JWT_TOKEN, jwt);
+  }
+
+  authenticateByToken(jwt: string) {
+    localStorage.setItem(this.JWT_TOKEN, jwt);
+    this.isAuthenticatedSubject.next(true);
+    this.hasErrors = false;
   }
 
   isError() : boolean {

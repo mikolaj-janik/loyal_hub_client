@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { passwordMatchValidator } from '../../validators/validators';
 
 @Component({
@@ -20,20 +20,29 @@ export class RegisterComponent {
 
   authService = inject(AuthService);
   router = inject(Router);
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+  ) {}
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.email = params.get('email') as string;
+    });
+  }
 
   registerForm = new FormGroup({
-    email: new FormControl(this.email, [Validators.required, Validators.minLength(2)]),
     password: new FormControl(this.password, [Validators.required, Validators.minLength(8)]),
-    repeatedPassword: new FormControl(this.password, [Validators.required, Validators.minLength(8)])
+    repeatedPassword: new FormControl(this.repeatedPassword, [Validators.required, Validators.minLength(8)])
   }, { validators: passwordMatchValidator });
   register() {
     if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
-      console.log(`Login: ${email} / ${password}`);
+      const { password, repeatedPassword } = this.registerForm.value;
+      console.log(`Login: ${this.email} / ${password}`);
       this.authService
-    .login({
-      email: email as string,
-      password: password as string
+    .register({
+      email: this.email as string,
+      password: password as string,
+      repeatedPassword: repeatedPassword as string
     })
     .subscribe(() => {
       if (this.authService)

@@ -1,0 +1,7 @@
+.content {
+    text-align: center;
+    justify-content: center;
+    font-size: large;
+    display: flex;
+    margin-top: 200px;
+}

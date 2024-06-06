@@ -11,3 +11,13 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
   return true;
 };
+
+export const authGuardEmail: CanActivateFn = (route, state) => {
+  let authService = inject(AuthService);
+  let routerService = inject(Router)
+  if (!authService.isLoggedIn()) {
+      routerService.navigate(['/register']);
+      return false;
+  }
+  return true;
+};
