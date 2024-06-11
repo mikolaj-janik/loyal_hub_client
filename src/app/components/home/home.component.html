@@ -1,1 +1,31 @@
-TU BĘDZIE CONTENT
+<div *ngIf="statistics.length > 0" style="margin-top: 100px;">
+    <h3 style="font-weight: 400;" class="text-center mb-2">Your loyalty programs</h3>
+    <div *ngFor="let statistic of statistics" class="row justify-content-center" style="margin-bottom: 30px;">
+        <div class="col-xl-5 col-lg-6 col-md-8">
+          <div class="card text-center">
+            <div class="card-header">
+              <span>{{ statistic.lp_name }}</span>
+              <span></span>
+            </div>
+            <div class="card-body">
+                <div *ngIf="statistic.level_name != null">
+                    <span>Level: {{ statistic.level_name }}</span><br>
+                    <span>Value: {{ statistic.value_factor }}</span><br><br>
+                    <ng-container *ngIf="statistic.promocodes && statistic.promocodes !== false">
+                        <span>Promocode: {{ statistic.promocodes.value_factor }}</span>
+                    </ng-container>
+                    <ng-container *ngIf="statistic.promocodes === false">
+                        <span>Promocode: Not available</span>
+                    </ng-container>
+                </div>
+                <div *ngIf="statistic.level_name == null">
+                    <span>You haven't reached any level yet!</span>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<div *ngIf="statistics.length === 0" style="margin-top: 90px;" class="text-center">
+    <h3 style="font-weight: 400;">You don't have any loyalty levels yet</h3>
+</div>
