@@ -15,10 +15,6 @@ export class HomeComponent {
 
   constructor() {
     
-      this.authService.getCurrentAuthUser().subscribe((r) => {
-        this.user = r;
-        console.log(r);
-      });
   }
   logout() {
     this.authService.logout();

@@ -15,6 +15,7 @@ export class LoginComponent {
   email = '';
   password = '';
   error = '';
+  isLoggedIn!: boolean;
 
   authService = inject(AuthService);
   router = inject(Router);
@@ -23,6 +24,18 @@ export class LoginComponent {
     email: new FormControl(this.email, [Validators.required, Validators.minLength(2)]),
     password: new FormControl(this.password, [Validators.required, Validators.minLength(8)])
   });
+
+  ngOnInit() {
+    this.authService.isLoggedIn$.subscribe(
+      (loggedIn: boolean) => {
+        this.isLoggedIn = loggedIn;
+      }
+    );
+    if (this.isLoggedIn) {
+      this.router.navigate(['/']);
+    }
+  }
+
   login() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;

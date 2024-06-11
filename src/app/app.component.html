@@ -28,7 +28,12 @@
       </div>
     </div>
   </nav>
-  <router-outlet></router-outlet>
+  <div *ngIf="isLoggedIn" class="mask" style="background-color: hsla(0, 0%, 32%, 0.3)">
+    <router-outlet></router-outlet>
+  </div>
+  <div *ngIf="!isLoggedIn">
+    <router-outlet></router-outlet>
+  </div>
    
  
 
