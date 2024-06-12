@@ -12,7 +12,8 @@
                     <span>Level: {{ statistic.level_name }}</span><br>
                     <span>Value: {{ statistic.value_factor }}</span><br><br>
                     <ng-container *ngIf="statistic.promocodes && statistic.promocodes !== false">
-                        <span>Promocode: {{ statistic.promocodes.value_factor }}</span>
+                        <span>Promocode: {{ statistic.promocodes.id }}</span><br>
+                        <span>Value: {{ statistic.promocodes.value_factor }}</span>
                     </ng-container>
                     <ng-container *ngIf="statistic.promocodes === false">
                         <span>Promocode: Not available</span>
